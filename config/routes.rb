@@ -20,14 +20,20 @@ Rails.application.routes.draw do
   patch 'cart_items/:id' => 'public/cart_items#update'
   delete 'cart_items/:id' => 'public/cart_items#destroy'
   delete 'cart_items/destroy_all' => 'public/cart_items#destroy_all'
-  create 'cart_items' => 'public/cart_items#create'
+  post 'cart_items' => 'public/cart_items#create'
   #orders routes
   get 'orders/new' => 'public/orders#new'
   post 'orders/' => 'public/orders#confirm'
   get 'orders/complete' => 'public/orders#complete'
-  create 'orders/' => 'public/orders#create'
+  post 'orders/' => 'public/orders#create'
   get 'orders' => 'public/orders#index'
   get 'orders/new/id' => 'public/orders#show'
+  #address routes
+  get 'addresses' => 'public/addresses/#index'
+  get 'addresses/edit' => 'public/addresses/#edit'
+  post 'addresses' => 'public/addresses#create'
+  patch 'addresses/:id' => 'public/addresses#update'
+  delete 'addresses/:id' => 'public/addresses#destroy'
   
   
   
