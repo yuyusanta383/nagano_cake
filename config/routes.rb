@@ -8,5 +8,9 @@ Rails.application.routes.draw do
   #items routes
   get 'items' => 'public/items#index'
   get 'items/:id' =>'public/items#show'
-    
+  
+  #customers routes
+  get 'customers/show' => 'public/customers#show'
+  get 'customers/edit' => 'public/customers#edit'
+  p
 end
