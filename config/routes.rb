@@ -1,6 +1,21 @@
 Rails.application.routes.draw do
   
-  devise_for :customers
+  
+  devise_for :admins, skip: :all
+  
+  devise_scope :admin do
+    get 'admin/sign_in', to: 'admin/sessions#new'
+    post 'admin/sign_in', to: 'admin/sessions#create'
+    delete 'admin/signout', to: 'admin/sessions#destroy'
+  end
+    
+  
+  
+  devise_for :customers, controllers: {
+    
+    registrations: 'public/customers/registrations',
+    sessions: 'public/customers/sessions'
+  }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   #homes routes
   get '/'=>'public/homes#top'
@@ -34,6 +49,15 @@ Rails.application.routes.draw do
   post 'addresses' => 'public/addresses#create'
   patch 'addresses/:id' => 'public/addresses#update'
   delete 'addresses/:id' => 'public/addresses#destroy'
+  
+  #admin/items routes
+  get 'admin/items' => 'admin/items/#index'
+  get 'admin/items/new' => 'admin/items#new'
+  post 'admin/items' => 'admin/items#create'
+  get 'admin/items/:id' => 'admin/items#show'
+  get 'admin/items/:id/edit' => 'admin/items#edit'
+  patch 'admin/items/:id' => 'address/items#update'
+  
   
   
   
