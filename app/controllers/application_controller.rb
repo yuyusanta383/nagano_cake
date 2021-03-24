@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     public_customers_show_path
   end
  end
-  
+ 
   #strong parameter
   before_action :configure_permitted_parameters, if: :devise_controller?
 

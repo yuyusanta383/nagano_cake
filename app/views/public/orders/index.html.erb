@@ -12,7 +12,9 @@
  <tr>
   <td><%= order.created_at.strftime('%Y/%m/%d') %></td>
   <td><%= order.address %></td>
-  <td><%= @item.name %></td>
+  <td><% order.order_history_details.each do |order_detail| %>
+   <%= order_detail.item.name %>
+  <% end %></td>
   <td><%= order.status %></td>
   <td><%= link_to "表示する", public_order_path(order),class:"btn btn-success" %></td>
  </tr>
