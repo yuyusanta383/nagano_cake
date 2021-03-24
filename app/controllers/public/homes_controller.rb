@@ -1,13 +1,9 @@
 class Public::HomesController < ApplicationController
-  #トップページ
+  
   def top
+   @items = Item.limit(4).order(" created_at DESC ")
   end
-  #アバウトページ
+  
   def about
   end
-  
-  
-  
-  
-end
-  
+end 

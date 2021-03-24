@@ -1,15 +1,25 @@
 Rails.application.routes.draw do
   
   
-  devise_for :admins, skip: :all
+  devise_for :admins, controllers: {
+    
+    sessions: 'admin/sessions'
+  }
   
-  devise_scope :admin do
-    get 'admin/sign_in', to: 'admin/sessions#new'
-    post 'admin/sign_in', to: 'admin/sessions#create'
-    delete 'admin/signout', to: 'admin/sessions#destroy'
-  end
+  # devise_scope :admin do
+  #   get 'admin/sign_in', to: 'admin/sessions#new'
+  #   post 'admin/sign_in', to: 'admin/sessions#create'
+  #   delete 'admin/signout', to: 'admin/sessions#destroy'
+  # # end 
     
   
+  namespace :public, path: "" do
+  get 'customers/show' => 'customers#show'
+  get 'customers/edit' => 'customers#edit'
+  patch 'customers/update' => 'customers#update'
+  get 'customers/st_update/confirm' => 'customers#update_confirm'
+  patch 'customers/st_update' => 'customers#st_update'  
+  end
   
   devise_for :customers, controllers: {
     
@@ -25,40 +35,42 @@ Rails.application.routes.draw do
   get 'items/:id' =>'public/items#show'
   
   #customers routes
-  get 'customers/show' => 'public/customers#show'
-  get 'customers/edit' => 'public/customers#edit'
-  patch 'customers' => 'public/customers#update'
-  get 'customers' => 'public/customers#update_confirm'
-  patch 'customers' => 'public/customers#st_update'
+  
+  
   #cart_items routes
-  get 'cart_items' => 'public/cart_items#index'
-  patch 'cart_items/:id' => 'public/cart_items#update'
-  delete 'cart_items/:id' => 'public/cart_items#destroy'
   delete 'cart_items/destroy_all' => 'public/cart_items#destroy_all'
-  post 'cart_items' => 'public/cart_items#create'
+  namespace :public, path: "" do
+    resources :cart_items, only: [:index, :create, :destroy, :update]
+  end
   #orders routes
-  get 'orders/new' => 'public/orders#new'
-  post 'orders/' => 'public/orders#confirm'
+  post 'orders/confirm' => 'public/orders#confirm'
   get 'orders/complete' => 'public/orders#complete'
-  post 'orders/' => 'public/orders#create'
-  get 'orders' => 'public/orders#index'
-  get 'orders/new/id' => 'public/orders#show'
+  namespace :public, path: "" do
+    resources :orders,only: [:index, :new, :create, :show ]
+end
   #address routes
-  get 'addresses' => 'public/addresses/#index'
-  get 'addresses/edit' => 'public/addresses/#edit'
-  post 'addresses' => 'public/addresses#create'
-  patch 'addresses/:id' => 'public/addresses#update'
-  delete 'addresses/:id' => 'public/addresses#destroy'
+  namespace :public, path: "" do
+    resources :addresses, only: [:index, :edit, :create, :update, :destroy]
+end
+  
   
   #admin/items routes
-  get 'admin/items' => 'admin/items/#index'
-  get 'admin/items/new' => 'admin/items#new'
-  post 'admin/items' => 'admin/items#create'
-  get 'admin/items/:id' => 'admin/items#show'
-  get 'admin/items/:id/edit' => 'admin/items#edit'
-  patch 'admin/items/:id' => 'address/items#update'
+  namespace :admin do
+   resources :items
+  end
+  #admin/customers routes
+   namespace :admin do
+    resources :customers, only:[:index, :show, :edit, :update]
+  end
+  #admin/homes routes
+  get '/admin' => 'admin/homes#top'
   
-  
+  #admin/genres routes& orders
+  namespace :admin do
+    resources :order_history_details, only:[:update]
+    resources :orders, only: [:index,:show, :update]
+    resources :genres, only: [:index, :create, :edit, :update]
+  end
   
   
 end

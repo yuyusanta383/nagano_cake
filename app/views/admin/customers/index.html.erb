@@ -1,0 +1,28 @@
+<div class="container tect-center">
+  <div class="row">
+   <h2>会員一覧</h2>
+  </div>
+ <diV> 
+ <table class="table table-hover table-inverse">
+  <thead>
+   <tr>
+    <th >会員ID</th>
+    <th >氏名</th>
+    <th>メールアドレス</th>
+　　<th>ステータス</th>
+　　</thead>
+　 <tbody>
+    <% @customers.each do |customer| %>
+     <tr>
+      <td><%= customer.id %></td>
+      <td>
+      <%= link_to customer.name, admin_customer_path(customer) %> 
+      </td>
+      <td><%= customer.email %></td>
+      <td><%= customer.is_deleted %></td>
+    <% end %> 
+ </table>
+   <%= paginate @customers %>
+  </diV>
+</diV> 
+ 

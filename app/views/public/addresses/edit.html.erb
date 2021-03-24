@@ -1,0 +1,12 @@
+<div class="container">
+    <h2>配送先編集</h2>
+    <%= form_for(@shipping_address,url: public_address_path, html: {method: 'PATCH'}) do |f| %>
+    
+    <%= f.label :postal_code, "郵便番号" %>
+    <%= f.text_field :postal_code %><br>
+    <%= f.label :address, "住所" %>
+    <%= f.text_field :address %><br>
+    <%= f.label :name, "宛名" %>
+    <%= f.text_field :name %>     <%= f.submit '変更内容を保存',class: "btn btn-primary" %>
+    <% end %>
+</div>

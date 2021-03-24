@@ -1,6 +1,7 @@
+
 <h2>商品新規登録</h2>
 <!--form_with部分-->
-<%= form_for @item do |f| %>
+<%= form_for(@item,url: admin_items_path, html: {method: 'POST'}) do |f| %>
 
  <h4>商品画像</h4>
  <%= f.attachment_field :image %></span>
@@ -9,12 +10,13 @@
  <h4>商品説明</h4>
  <%= f.text_area :introduction %>
 <h4>ジャンル</h4>
-<%# コメントアウト　<%= f.select :genre_id %> 
+<%= f.collection_select(:genre_id, @genres, :id, :name ) %>
  <h4>税抜き価格</h4>
  <%= f.number_field :price %>円
  <h4>販売ステータス</h4>
- <%= f.select :is_active, {'販売中': 1, '販売停止': 2},{ class: 'form-control' , required: true } %>
+ <label><%= f.radio_button :is_active, "販売中" %> 販売中 </label>
+ <label><%= f.radio_button :is_active, "販売停止" %>販売停止  </label>
   
- <h4><%= f.submit '新規登録' %></h4>
+ <h4><%= f.submit '新規登録',class: "btn btn-primary" %></h4>
  
  <% end %>

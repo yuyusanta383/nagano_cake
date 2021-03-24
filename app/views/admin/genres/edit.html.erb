@@ -1,0 +1,5 @@
+<h2>ジャンル編集</h2>
+
+<%= form_for(@genre,url: admin_genre_path, html: {method: 'PATCH'}) do |f| %>
+<p>ジャンル名　 <%= f.text_field :name %></p>　<%= f.submit '変更を保存',class: "btn btn-primary" %> 
+<% end  %>

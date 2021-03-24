@@ -1,0 +1,27 @@
+<div class="container">
+ <h2>ジャンル一覧・追加</h2></br>
+ <div class="row ">
+ 
+<%= form_for(@genre,url: admin_genres_path, html: {method: 'POST'}) do |f| %>
+ 
+  <lavel>ジャンル名</lavel><%= f.text_field :name %>
+  <%= f.submit '新規登録',class: "btn btn-primary" %>
+ </div>
+  <% end %>
+ <br>
+ <table class="table table-hover">
+  <thead>
+   <tr>
+    <th>ジャンル</th>
+    <th colspan="1"></th>
+   </tr>
+  </thead>
+ <tbody>
+  <% @genres.each do |genre| %>
+  <tr> 
+   <td> <%= genre.name %> 　<%= link_to "編集", edit_admin_genre_path(genre),class: "btn btn-primary" %></td>
+  </tr>
+  <% end %>
+ </tbody>
+ </div>
+ </div>

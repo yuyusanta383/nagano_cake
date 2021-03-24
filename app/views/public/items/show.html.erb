@@ -2,6 +2,18 @@
 <header class shadow-sm>
  <nav class = "navbar navbar-expand-lg navbar-light">
   <div class ="container">
-   <a class = "navbar-brand p4" href="/">
+   
   
 </header>
+<h3>商品詳細</h3>
+<p><%= attachment_image_tag @item, :image, format: 'jpeg', size: "300x300" %></p>
+<p><%= @item.name %></p>
+<p><%= @item.introduction %></p>
+<p>¥<%= (@item.price * 1.1).floor  %>(税込)</p>
+<%= form_for(@cart_item,url: public_cart_items_path, method: :POST) do |f| %>
+ <%= f.hidden_field :item_id, :value => @item.id %> 
+ <%= f.select :amount, [['1',],['2',],['3',],['4',],['5',],
+   ['6',],['7',],['8',],['9',],['10',]], { include_blank: "" } %>
+ <%= f.submit 'カートに入れる' %>
+<% end %>
+

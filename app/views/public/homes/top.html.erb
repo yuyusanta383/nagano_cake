@@ -2,33 +2,7 @@
   
 </head>
 <body>
-<header class shadow-sm>
- <nav class = "navbar navbar-expand-lg navbar-light">
-  <div class ="container">
-   <a class = "navbar-brand p4" href="/">
-    <span>ながのCAKE</span>
-   </a>
-   <button class="navbar-toggler" type="button" data-toggle="collapse"  data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>    
-   </button>
-   <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav ml-auto">
-    <li class="nav-item">
-     <%= link_to "About",about_path, class: 'nav-link text-dark' %>
-    </li>
-    <li class= "nav-item">
-     <%= link_to "商品一覧", items_path, class: 'nav-link text-dark' %>
-    </li>
-    <li class= "nav-item">
-     <%= link_to "新規登録", new_customer_registration_path, class: 'nav-link text-dark' %>
-    </li>
-    <li class="nav-item">
-     <%=link_to "ログイン", new_customer_session_path, class: 'nav-link text-dark' %>
-    </li>
-  </div>
- </div>
- </nav>  
-</header>
+
 <main>
  <div class ="container">
   <div class = "row">
@@ -39,6 +13,20 @@
        購入には会員登録が必要となります。</p>
    </div>
   </div>
- </div>
+ </diV
+ <div class="container">
+ <div class="row">
+  <div class="mx-auto" >
+   <h2><i class="fas fa-cookie-bite"></i>新着商品<span style="font-size:20px;">（全<%= @items.count %>件）</span></h2><br>
+    <div class="row">
+     <% @items.each do |item| %>
+     <div class="box" style="float:left; margin-right:20px;">
+      <%=  attachment_image_tag item, :image, format: 'jpeg', size: "200x200" %></tr>
+      <p><%= link_to item.name, "/items/#{item.id}" %></p>
+      <P>￥<%= (item.price * 1.1).floor %>  </P>
+     </div> 
+      <% end %>
+    </div>
+<%= link_to "全ての商品を見る>", items_path %>
 </main>
 </body>
