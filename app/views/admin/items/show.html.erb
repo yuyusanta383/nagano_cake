@@ -21,7 +21,7 @@
  <h4 style="margin-bottom: 30px;">税別価格<br>税込み価格
  <%= (@item.price * 1.1).floor %>(<%= @item.price %>)円</h4>
  <h4 style="margin-bottom: 30px;">販売ステータス 
- <%= @item.is_active == true ? "販売停止" : "販売中" %></h4>
+ <%= @item.is_active %></h4>
 
 
 

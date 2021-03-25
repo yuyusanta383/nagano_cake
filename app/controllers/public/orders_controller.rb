@@ -49,7 +49,7 @@ class Public::OrdersController < ApplicationController
     end
     @customer_cart_item.destroy_all
     
-    redirect_to orders_complete_path
+    redirect_to public_orders_complete_path
   end
   
    

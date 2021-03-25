@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  
+  devise_for :customers
   
   devise_for :admins, controllers: {
     
@@ -14,63 +14,36 @@ Rails.application.routes.draw do
     
   
   namespace :public, path: "" do
-  get 'customers/show' => 'customers#show'
-  get 'customers/edit' => 'customers#edit'
-  patch 'customers/update' => 'customers#update'
-  get 'customers/st_update/confirm' => 'customers#update_confirm'
-  patch 'customers/st_update' => 'customers#st_update'  
-  end
-  
-  devise_for :customers, controllers: {
+    root to: 'homes#top'
+    get 'about'=>'homes#about'
     
-    registrations: 'public/customers/registrations',
-    sessions: 'public/customers/sessions'
-  }
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  #homes routes
-  get '/'=>'public/homes#top'
-  get 'about'=>'public/homes#about'
-  #items routes
-  get 'items' => 'public/items#index'
-  get 'items/:id' =>'public/items#show'
+    resources :customers
+    get 'customers/st_update/confirm' => 'customers#update_confirm'
+    patch 'customer_st_update' => 'customers#st_update',as: 'st_update'
+    
+    resources :items, only: [:index, :show]
   
-  #customers routes
-  
-  
-  #cart_items routes
-  delete 'cart_items/destroy_all' => 'public/cart_items#destroy_all'
-  namespace :public, path: "" do
+    delete 'cart_items/destroy_all' => 'cart_items#destroy_all'
     resources :cart_items, only: [:index, :create, :destroy, :update]
-  end
-  #orders routes
-  post 'orders/confirm' => 'public/orders#confirm'
-  get 'orders/complete' => 'public/orders#complete'
-  namespace :public, path: "" do
+    
+    post 'orders/confirm' => 'orders#confirm'
+    get 'orders/complete' => 'orders#complete'
     resources :orders,only: [:index, :new, :create, :show ]
-end
-  #address routes
-  namespace :public, path: "" do
+    
     resources :addresses, only: [:index, :edit, :create, :update, :destroy]
-end
+  end
   
-  
-  #admin/items routes
   namespace :admin do
+   root to:  'admin/homes#top'
    resources :items
+
+   resources :customers, only:[:index, :show, :edit, :update]
+
+   resources :order_history_details, only:[:update]
+
+   resources :orders, only: [:index,:show, :update]
+
+   resources :genres, only: [:index, :create, :edit, :update]
   end
-  #admin/customers routes
-   namespace :admin do
-    resources :customers, only:[:index, :show, :edit, :update]
-  end
-  #admin/homes routes
-  get '/admin' => 'admin/homes#top'
-  
-  #admin/genres routes& orders
-  namespace :admin do
-    resources :order_history_details, only:[:update]
-    resources :orders, only: [:index,:show, :update]
-    resources :genres, only: [:index, :create, :edit, :update]
-  end
-  
   
 end
