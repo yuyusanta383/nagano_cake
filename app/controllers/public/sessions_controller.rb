@@ -1,18 +1,20 @@
 class Customers::SessionsController < Devise::SessionsController
 
-    before_action :reject_user, only: [:create]
+    before_action :reject_cusutomer, only: [:create]
   
     protected
-    def active_for_authentication?(customer)
-     customer.super && (customer.is_deleted == false)
-    end
-    def reject_user
-      @customer = Customer.find_by(email: params[:customer][:email].downcase)
-      if @customer && @customer.valid_password?(params[:customer][:password] )&& !active_for_authentication?(@customer) 
-          flash[:error] = "You are already unsubscribed"
-          redirect_to new_customer_registration_path
+    
+   def reject_cusutomer
+    
+    @customer = Customer.find_by(email: params[:customer][:email].downcase)
+  
+    if @customer
+      if (@customer.valid_password?(params[:customer][:password]) && (@customer.active_for_authentication? == false))
+        flash[:notice] = "退会済みです。再度ご登録をしてご利用ください。"
+        redirect_to new_customer_session_path
       else
-        flash[:error] = "Failed to log in"
+        flash[:notice] = "項目を入力してください"
       end
     end
+   end
 end

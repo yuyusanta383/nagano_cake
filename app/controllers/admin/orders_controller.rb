@@ -19,9 +19,16 @@ class Admin::OrdersController < ApplicationController
  end
  
  def update
-  @order = Order.find(params[:id])
-  @order.update(order_params)
-   redirect_to  admin_order_path(@order)
+       @order = Order.find(params[:id])
+       @order_detail = @order.order_history_details
+       
+       @order.update(order_params)
+       if @order.status == "入金確認" 
+       
+	       @order_detail.update_all(making_status: 1) 
+	      end
+    
+       redirect_to  admin_order_path(@order)
  end
  
  private

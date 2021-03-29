@@ -7,6 +7,10 @@ class Customer < ApplicationRecord
  has_many :cart_items
  has_many :orders
  enum is_deleted: { 有効: false, 退会: true }
+ 
+def active_for_authentication?
+     self.is_deleted == "有効"
+end
 def name
   [first_name, last_name].join('')
 end

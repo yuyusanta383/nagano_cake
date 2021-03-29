@@ -1,7 +1,7 @@
 class Admin::ItemsController < ApplicationController
   
   def index
-  @items = Item.all
+  @items = Item.page(params[:page]).reverse_order
   @genres = Genre.all
   end
   
@@ -14,7 +14,7 @@ class Admin::ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
     @item.save
-     redirect_to :action => 'index'
+     redirect_to admin_item_path(@item.id)
   end
   
   def show
